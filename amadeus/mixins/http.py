@@ -1,3 +1,6 @@
+import certifi
+import ssl
+import urllib.request as urlrq
 from platform import python_version
 from pprint import pformat
 try:
@@ -148,6 +151,6 @@ class HTTP(object):
     # Actually make the HTTP call, making sure to catch it in case of an error
     def __fetch(self, request):
         try:
-            return self.http(request.http_request)
+            return self.http(request.http_request, context=ssl.create_default_context(cafile=certifi.where()))
         except URLError as exception:
             return exception
